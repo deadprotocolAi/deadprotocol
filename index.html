@@ -426,9 +426,46 @@
       opacity:1;
       transform: translateY(0);
     }
+    .soul{
+  position:fixed;
+  width:6px;
+  height:6px;
+  background: radial-gradient(circle, #23ffb6, transparent 70%);
+  border-radius:50%;
+  opacity:.5;
+  pointer-events:none;
+  animation: soulRise 12s linear infinite;
+}
+@keyframes soulRise{
+  from{ transform:translateY(100vh) scale(.4); opacity:0 }
+  to{ transform:translateY(-20vh) scale(1); opacity:.7 }
+}
   </style>
 </head>
-
+<script>
+for(let i=0;i<22;i++){
+  const s=document.createElement("div")
+  s.className="soul"
+  s.style.left=Math.random()*100+"vw"
+  s.style.animationDelay=(Math.random()*12)+"s"
+  document.body.appendChild(s)
+}
+</script>
+  
+const texts=[
+  "The grave is open.",
+  "Send your dead tokens.",
+  "Every funeral is permanent.",
+  "Only the grave remembers.",
+  "No promises. Only on-chain death."
+]
+let i=0
+const o=document.getElementById("oracle")
+setInterval(()=>{
+  o.textContent=texts[i%texts.length]
+  i++
+},2600)
+  </script>
 <body>
   <div class="wrap">
 
@@ -456,7 +493,7 @@
         </div>
 
         <h1 class="headline">Revive the Dead Narrative.</h1>
-        <p class="sub">
+        <p <p class="sub" id="oracle"></p>
           Bury dead tokens into the <b>Grave Wallet</b>. If your funeral is valid, the NECRO engine may reward you.
           No promises. No guarantees. Just on-chain funerals recorded forever.
         </p>
