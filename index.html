@@ -1,645 +1,322 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>DEAD Protocol — Revive the Dead Narrative</title>
-  <meta name="description" content="Bury dead tokens into the Grave Wallet. If the funeral is valid, the NECRO engine may reward you. No promises. No guarantees." />
-
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#05060a" />
+  <title>DEAD Protocol — The First On-Chain Funeral</title>
   <style>
     :root{
-      --bg:#07070c;
-      --panel: rgba(255,255,255,.06);
-      --panel2: rgba(255,255,255,.04);
-      --stroke: rgba(255,255,255,.10);
-      --text: rgba(255,255,255,.88);
-      --muted: rgba(255,255,255,.62);
-
-      --cyan: #00ffd5;
-      --violet:#b36bff;
-      --magenta:#ff4aa2;
-      --green:#3dff9a;
-      --gold:#ffd36d;
-
+      --bg:#05060a;
+      --card:rgba(255,255,255,.06);
+      --card2:rgba(255,255,255,.09);
+      --stroke:rgba(255,255,255,.10);
+      --text:rgba(255,255,255,.90);
+      --muted:rgba(255,255,255,.70);
+      --muted2:rgba(255,255,255,.55);
+      --green:#2bffb8;
+      --purple:#b56cff;
+      --cyan:#32d7ff;
+      --warn:#ffcc66;
+      --shadow: 0 18px 80px rgba(0,0,0,.55);
       --radius: 22px;
-      --shadow: 0 18px 55px rgba(0,0,0,.55);
-      --blur: 18px;
+      --radius2: 18px;
+      --max: 980px;
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
     }
 
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
+    *{box-sizing:border-box}
+    html,body{height:100%}
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      font-family:var(--font);
       color:var(--text);
-      background: radial-gradient(1100px 700px at 20% 20%, rgba(179,107,255,.10), transparent 60%),
-                  radial-gradient(900px 650px at 80% 75%, rgba(0,255,213,.08), transparent 60%),
-                  radial-gradient(700px 520px at 45% 92%, rgba(255,74,162,.07), transparent 55%),
+      background: radial-gradient(1400px 900px at 50% -20%, rgba(181,108,255,.18), transparent 55%),
+                  radial-gradient(1200px 800px at 10% 10%, rgba(50,215,255,.12), transparent 55%),
+                  radial-gradient(1200px 900px at 90% 30%, rgba(43,255,184,.10), transparent 55%),
                   var(--bg);
       overflow-x:hidden;
     }
 
-    /* ===== Cosmic Nebula Layers (subtle, premium) ===== */
-    .nebula{
+    body::before{
+      content:"";
       position:fixed;
-      inset:-40vh -40vw;
+      inset:-20%;
       pointer-events:none;
-      z-index:-3;
-      filter: blur(1px) saturate(1.1);
-      opacity:.9;
       background:
-        radial-gradient(circle at 15% 20%, rgba(0,255,213,.12), transparent 42%),
-        radial-gradient(circle at 80% 30%, rgba(179,107,255,.14), transparent 44%),
-        radial-gradient(circle at 40% 85%, rgba(255,74,162,.10), transparent 45%),
-        radial-gradient(circle at 55% 55%, rgba(61,255,154,.06), transparent 52%);
-      animation: nebulaFloat 18s ease-in-out infinite alternate;
-    }
-    @keyframes nebulaFloat{
-      from{ transform: translate3d(-1.5%, -1%, 0) scale(1); filter:hue-rotate(0deg) blur(1px) saturate(1.05); }
-      to  { transform: translate3d( 1.5%,  1.2%,0) scale(1.02); filter:hue-rotate(22deg) blur(1px) saturate(1.15); }
-    }
-
-    /* Aura ring */
-    .aura{
-      position:fixed;
-      inset:0;
-      pointer-events:none;
+        radial-gradient(circle at 20% 30%, rgba(50,215,255,.16), transparent 45%),
+        radial-gradient(circle at 80% 70%, rgba(181,108,255,.16), transparent 50%),
+        radial-gradient(circle at 50% 90%, rgba(43,255,184,.10), transparent 55%),
+        radial-gradient(circle at 45% 45%, rgba(255,120,120,.06), transparent 60%);
+      filter: blur(2px) saturate(1.1);
+      opacity:.95;
+      animation: nebula 14s ease-in-out infinite alternate;
       z-index:-2;
-      background:
-        radial-gradient(600px 600px at 50% 38%,
-          rgba(0,255,213,.18),
-          rgba(179,107,255,.12) 35%,
-          transparent 62%);
-      mix-blend-mode: screen;
-      opacity:.75;
-      animation: auraPulse 5.8s ease-in-out infinite;
-      filter: blur(14px);
-    }
-    @keyframes auraPulse{
-      0%,100%{ transform: scale(1); opacity:.60; }
-      50%    { transform: scale(1.08); opacity:.85; }
     }
 
-    /* Star dust */
-    .stars{
+    body::after{
+      content:"";
       position:fixed;
       inset:0;
       pointer-events:none;
-      z-index:-4;
       background-image:
-        radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,.35) 50%, transparent 55%),
-        radial-gradient(1px 1px at 70% 12%, rgba(255,255,255,.25) 50%, transparent 55%),
-        radial-gradient(1px 1px at 86% 56%, rgba(255,255,255,.22) 50%, transparent 55%),
-        radial-gradient(1px 1px at 40% 82%, rgba(255,255,255,.18) 50%, transparent 55%),
-        radial-gradient(1px 1px at 12% 68%, rgba(255,255,255,.16) 50%, transparent 55%);
-      opacity:.55;
+        radial-gradient(rgba(255,255,255,.08) 1px, transparent 1px);
+      background-size: 110px 110px;
+      background-position: 0 0;
+      opacity:.10;
       filter: blur(.2px);
-      animation: twinkle 9s linear infinite;
-    }
-    @keyframes twinkle{
-      0%,100%{ opacity:.45; transform: translateY(0); }
-      50%{ opacity:.7; transform: translateY(-6px); }
+      z-index:-1;
+      mix-blend-mode: screen;
     }
 
-    /* ===== Layout ===== */
+    @keyframes nebula{
+      from { transform:scale(1) translate3d(0,0,0); filter:hue-rotate(0deg) saturate(1.05); }
+      to   { transform:scale(1.06) translate3d(1.5%, -1.5%, 0); filter:hue-rotate(30deg) saturate(1.2); }
+    }
+
     .wrap{
-      width:min(1100px, 92vw);
-      margin: 22px auto 70px;
+      max-width:var(--max);
+      margin:0 auto;
+      padding:22px 16px 70px;
       position:relative;
     }
 
-    header{
+    /* header */
+    .topbar{
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:14px;
-      padding: 14px 14px;
-      border:1px solid var(--stroke);
-      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
-      border-radius: 18px;
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(var(--blur));
-      -webkit-backdrop-filter: blur(var(--blur));
+      gap:12px;
+      margin-top:8px;
+      margin-bottom:18px;
+      position:relative;
+      z-index:1;
     }
-
     .brand{
       display:flex; align-items:center; gap:12px;
-      min-width: 240px;
-    }
-    .badge{
-      width:42px; height:42px;
-      border-radius: 14px;
-      display:grid; place-items:center;
+      padding:12px 14px;
+      border-radius:18px;
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
       border:1px solid var(--stroke);
-      background:
-        radial-gradient(18px 18px at 30% 30%, rgba(0,255,213,.25), transparent 55%),
-        radial-gradient(16px 16px at 70% 70%, rgba(179,107,255,.22), transparent 55%),
-        rgba(0,0,0,.35);
-      box-shadow: 0 0 0 1px rgba(0,0,0,.2) inset, 0 10px 28px rgba(0,0,0,.45);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
     }
-    .brand h1{
-      margin:0;
-      font-size: 15px;
-      letter-spacing:.35px;
-      line-height:1.15;
+    .logo{
+      width:40px;height:40px;border-radius:12px;
+      display:grid;place-items:center;
+      background: radial-gradient(circle at 30% 30%, rgba(43,255,184,.30), rgba(181,108,255,.18) 55%, rgba(255,255,255,.06));
     }
-    .brand p{
-      margin:0;
-      font-size: 12px;
-      color: var(--muted);
-    }
+    .brand h1{margin:0;font-size:14px;color:var(--muted);}
+    .brand b{display:block;font-size:16px;color:var(--text);}
 
     .status{
-      display:flex; align-items:center; gap:10px;
-      padding: 10px 12px;
-      border-radius: 999px;
-      border:1px solid rgba(0,255,213,.20);
-      background: rgba(0,0,0,.25);
-      box-shadow: 0 0 0 1px rgba(0,0,0,.35) inset;
-      white-space:nowrap;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:12px 14px;
+      border-radius:999px;
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border:1px solid var(--stroke);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      min-width: 160px;
+      justify-content:center;
     }
     .dot{
       width:10px;height:10px;border-radius:999px;
-      background: var(--green);
-      box-shadow: 0 0 0 6px rgba(61,255,154,.12), 0 0 24px rgba(61,255,154,.45);
-      animation: dotPulse 2.2s ease-in-out infinite;
+      background: radial-gradient(circle, rgba(43,255,184,1), rgba(43,255,184,.35));
+      box-shadow: 0 0 16px rgba(43,255,184,.55);
     }
-    @keyframes dotPulse{
-      0%,100%{ transform:scale(1); filter:saturate(1); }
-      50%{ transform:scale(1.15); filter:saturate(1.3); }
-    }
-    .status b{ color:rgba(255,255,255,.92); }
-    .status .open{ color: var(--green); font-weight:800; letter-spacing:.6px; }
+    .status span{ color:var(--muted); font-size:13px; }
+    .status strong{ color:var(--green); margin-left:6px; }
 
-    /* ===== Hero ===== */
+    /* hero */
     .hero{
-      margin-top: 18px;
+      padding:18px;
+      border-radius:var(--radius);
+      border:1px solid rgba(255,255,255,.08);
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      position:relative;
+      z-index:1;
+    }
+    .heroGrid{
       display:grid;
-      grid-template-columns: 1.15fr .85fr;
-      gap: 16px;
+      grid-template-columns: 1.05fr .95fr;
+      gap:16px;
       align-items:stretch;
     }
-    @media (max-width: 920px){
-      .hero{ grid-template-columns: 1fr; }
-      .brand{ min-width: auto; }
-    }
+    @media (max-width: 860px){
+      .heroGrid{ grid-template-columns: 1fr; }
+    }  
 
-    .card{
-      border:1px solid var(--stroke);
-      border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.035));
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(var(--blur));
-      -webkit-backdrop-filter: blur(var(--blur));
-      overflow:hidden;
-      position:relative;
+    .pillRow{
+      display:flex; flex-wrap:wrap; gap:10px; margin-bottom:14px;
     }
-    .card::before{
-      content:"";
-      position:absolute; inset:-2px;
-      background: radial-gradient(420px 240px at 30% 20%, rgba(0,255,213,.14), transparent 55%),
-                  radial-gradient(380px 250px at 75% 35%, rgba(179,107,255,.12), transparent 60%),
-                  radial-gradient(280px 220px at 45% 85%, rgba(255,74,162,.10), transparent 55%);
-      opacity:.9;
-      pointer-events:none;
-      z-index:0;
-    }
-    .card > *{ position:relative; z-index:1; }
-
-    .heroLeft{
-      padding: 18px 18px 16px;
-    }
-    .pills{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom: 10px; }
     .pill{
-      font-size: 12px;
-      color: rgba(255,255,255,.82);
-      padding: 10px 12px;
-      border-radius: 999px;
+      padding:10px 12px; border-radius:999px;
       border:1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.28);
-      box-shadow: 0 0 0 1px rgba(0,0,0,.25) inset;
+      background: rgba(0,0,0,.15);
+      color:var(--muted); font-size:13px;
+      backdrop-filter: blur(10px);
     }
-    .pill strong{ color: rgba(255,255,255,.92); }
+    .pill b{color:var(--text)}
 
-    /* Breathing headline */
-    .headline{
-      margin: 10px 0 10px;
-      font-size: clamp(34px, 5.2vw, 64px);
-      line-height: .95;
-      letter-spacing: -1px;
-      font-weight: 900;
-      text-shadow: 0 18px 55px rgba(0,0,0,.55);
-      animation: breathe 4.6s ease-in-out infinite;
-      transform-origin: 50% 50%;
+    .headline{margin:0;font-size:52px;line-height:1.04;letter-spacing:-.02em;
+      text-shadow: 0 18px 50px rgba(0,0,0,.55);
+      animation:breathe 4.8s ease-in-out infinite;
     }
     @keyframes breathe{
-      0%,100%{ transform: translateY(0) scale(1); filter: drop-shadow(0 0 0 rgba(0,255,213,0)); }
-      50%{ transform: translateY(-3px) scale(1.015); filter: drop-shadow(0 0 18px rgba(0,255,213,.18)); }
+      0%{transform:translateY(0);}50%{transform:translateY(-2px);}100%{transform:translateY(0);}
     }
 
-    .sub{
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.65;
-      margin: 0 0 14px;
-      max-width: 52ch;
-    }
+    .sub{margin:14px 0 18px;color:var(--muted);font-size:15.5px;line-height:1.7;}
 
-    .ctaRow{
-      display:flex; flex-wrap:wrap; gap:12px;
-      margin-top: 10px;
-    }
+    .btnRow{display:flex;flex-wrap:wrap;gap:12px;align-items:center;}
 
-    /* Alive buttons */
     .btn{
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.20);
+      color:var(--text);
+      padding:12px 14px;
+      border-radius:16px;
+      cursor:pointer;
+      font-weight:650;
+      letter-spacing:.01em;
       display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      padding: 13px 14px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(0,0,0,.28);
-      color: rgba(255,255,255,.9);
+      gap:10px; align-items:center;
+      transition: transform .16s ease;
+      backdrop-filter: blur(10px);
       text-decoration:none;
-      font-weight: 800;
-      letter-spacing: .2px;
-      min-width: 170px;
-      position:relative;
-      overflow:hidden;
-      box-shadow: 0 12px 30px rgba(0,0,0,.35);
-      transform: translateZ(0);
     }
-    .btn::before{
-      content:"";
-      position:absolute;
-      inset:-60%;
-      background: conic-gradient(from 180deg,
-        rgba(0,255,213,.0),
-        rgba(0,255,213,.22),
-        rgba(179,107,255,.22),
-        rgba(255,74,162,.18),
-        rgba(0,255,213,.0)
-      );
-      animation: spin 3.6s linear infinite;
-      opacity:.75;
-    }
-    @keyframes spin{ to{ transform: rotate(360deg); } }
-    .btn::after{
-      content:"";
-      position:absolute;
-      inset:2px;
-      border-radius: 14px;
-      background: linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.22));
-      border:1px solid rgba(255,255,255,.06);
-    }
-    .btn > span{ position:relative; z-index:2; }
-    .btn:hover{ transform: translateY(-1px); }
-    .btn:active{ transform: translateY(0px) scale(.99); }
+    .btn:hover{transform:translateY(-1px);}
+    .btn:active{transform:translateY(0);}
 
-    .btn.telegram{ box-shadow: 0 14px 35px rgba(0,255,213,.10), 0 16px 40px rgba(0,0,0,.45); }
-    .btn.x{ box-shadow: 0 14px 35px rgba(179,107,255,.10), 0 16px 40px rgba(0,0,0,.45); }
-    .btn.copy{
-      min-width: 210px;
-      box-shadow: 0 14px 35px rgba(255,74,162,.08), 0 16px 40px rgba(0,0,0,.45);
-    }
+    .btn.primary{background: linear-gradient(135deg, rgba(43,255,184,.22), rgba(181,108,255,.20));}
 
     .walletBox{
-      margin-top: 14px;
-      padding: 14px;
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.25);
+      margin-top:16px;padding:14px;border-radius:18px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.14);backdrop-filter:blur(10px);
     }
-    .walletBox small{
-      color: rgba(255,255,255,.70);
-      letter-spacing: .8px;
-      font-weight: 900;
-      display:block;
-      margin-bottom: 8px;
-      text-transform: uppercase;
-    }
-    .addr{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size: 13px;
-      line-height: 1.35;
-      color: rgba(255,255,255,.88);
-      word-break: break-all;
-      padding: 12px;
-      border-radius: 14px;
-      background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.08);
-    }
-    .toast{
-      margin-top:10px;
-      display:none;
-      font-size: 13px;
-      color: rgba(255,255,255,.85);
-    }
-    .toast.show{ display:block; }
+    .walletLabel{font-size:13px;color:var(--muted2);margin-bottom:8px;}
+    .addr{font-family:ui-monospace,monospace;font-size:14px;color:var(--text);padding:12px;border-radius:14px;
+      background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);}
 
-    /* Right side image card */
-    .heroRight{
-      padding: 0;
-      display:flex;
-      flex-direction:column;
-    }
-    .heroImg{
-      width:100%;
-      aspect-ratio: 16/11;
-      object-fit: cover;
-      display:block;
-      filter: saturate(1.02) contrast(1.03);
-    }
-    .imgCap{
-      padding: 14px 16px 16px;
-      border-top: 1px solid rgba(255,255,255,.08);
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.55;
-    }
-    .imgCap b{ color: rgba(255,255,255,.86); }
+    .mediaCard{border-radius:var(--radius2);overflow:hidden;border:1px solid rgba(255,255,255,.08);
+      background:rgba(0,0,0,.14);backdrop-filter:blur(10px);box-shadow:0 20px 70px rgba(0,0,0,.55);}
+    .mediaCard img{width:100%;height:310px;object-fit:cover;}
 
-    /* ===== Sections ===== */
-    .grid{
-      margin-top: 16px;
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-    @media (max-width: 920px){
-      .grid{ grid-template-columns: 1fr; }
-    }
-    .section{
-      padding: 16px;
-    }
-    .section h2{
-      margin:0 0 6px;
-      font-size: 18px;
-      letter-spacing: .2px;
-    }
-    .section p{
-      margin:0;
-      color: var(--muted);
-      line-height: 1.6;
-      font-size: 14px;
-    }
+    .imgCap{padding:14px;color:var(--muted);border-top:1px solid rgba(255,255,255,.07);
+      background:linear-gradient(180deg,rgba(0,0,0,.06),rgba(0,0,0,.18));font-size:14px;}
 
-    .howWrap{
-      margin-top: 16px;
-      padding: 0;
-      overflow:hidden;
-    }
-    .howImg{
-      width:100%;
-      display:block;
-      object-fit: cover;
-      max-height: 760px;
-    }
-    .howBar{
-      padding: 14px 16px;
-      border-top: 1px solid rgba(255,255,255,.08);
-      display:flex;
-      justify-content:space-between;
-      flex-wrap:wrap;
-      gap:10px;
-      align-items:center;
-      color: var(--muted);
-      font-size: 13px;
-    }
-    .howBar .mini{
-      display:flex; gap:10px; flex-wrap:wrap;
-    }
-    .tag{
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.24);
-      color: rgba(255,255,255,.78);
-      font-weight: 800;
-      letter-spacing:.2px;
-      font-size: 12px;
-    }
+    .grid{margin-top:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+    @media (max-width:860px){.grid{grid-template-columns:1fr}}
 
-    footer{
-      margin-top: 18px;
-      text-align:center;
-      color: rgba(255,255,255,.48);
-      font-size: 12px;
-      line-height: 1.6;
-    }
+    .card{padding:16px;border-radius:var(--radius2);border:1px solid rgba(255,255,255,.10);
+      background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.03));}
+    .card h2{margin:0 0 8px;font-size:20px;color:var(--text);}
+    .card p{margin:0;color:var(--muted);font-size:14.5px;line-height:1.65;}
 
-    /* ===== Floating Skulls ===== */
-    .skulls{
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      z-index:-1;
-      overflow:hidden;
-    }
-    .skull{
-      position:absolute;
-      width: 26px; height: 26px;
-      opacity:.22;
-      filter: drop-shadow(0 0 10px rgba(179,107,255,.16));
-      animation: drift linear infinite;
-      transform: translate3d(0,0,0);
-    }
-    @keyframes drift{
-      from{ transform: translate3d(0, 110vh, 0) rotate(0deg); }
-      to  { transform: translate3d(0,-140vh, 0) rotate(360deg); }
-    }
-    .skull svg{ width:100%; height:100%; }
+    .howWrap{margin-top:14px;padding:14px;border-radius:var(--radius);}
+    .howWrap img{width:100%;border-radius:18px;border:1px solid rgba(255,255,255,.08);background:#000;}
+    .tagRow{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;}
+    .tag{padding:10px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.10);
+      background:rgba(0,0,0,.14);color:var(--muted);font-size:13px;}
 
-    /* Reduce motion */
-    @media (prefers-reduced-motion: reduce){
-      .nebula, .aura, .headline, .dot, .btn::before, .skull{ animation:none !important; }
-    }
+    footer{text-align:center;color:rgba(255,255,255,.45);font-size:13px;margin-top:18px;}
   </style>
 </head>
 
 <body>
-  <div class="stars"></div>
-  <div class="nebula"></div>
-  <div class="aura"></div>
-  <div class="skulls" aria-hidden="true" id="skulls"></div>
+  <div class="wrap">
 
-  <main class="wrap">
-    <header>
+    <div class="topbar">
       <div class="brand">
-        <div class="badge" aria-hidden="true">🪦</div>
-        <div>
-          <h1>DEAD Protocol</h1>
-          <p>The First Funeral</p>
-        </div>
+        <div class="logo">🪦</div>
+        <div><h1>DEAD Protocol</h1><b>The First On-Chain Funeral</b></div>
       </div>
 
-      <div class="status" title="Status is cosmetic (front-end).">
-        <span class="dot"></span>
-        <div>
-          <div><b>Solana Graveyard</b> is <span class="open">OPEN</span></div>
-        </div>
+      <div class="status">
+        <div class="dot"></div>
+        <span>Solana Graveyard <strong>OPEN</strong></span>
       </div>
-    </header>
+    </div>
 
     <section class="hero">
-      <!-- LEFT -->
-      <div class="card heroLeft">
-        <div class="pills">
-          <div class="pill"><strong>NECRO</strong> Engine</div>
-          <div class="pill"><strong>666</strong> DEAD / Funeral</div>
-          <div class="pill">Min <strong>1,000,000</strong> dead tokens</div>
+      <div class="heroGrid">
+        <div>
+          <div class="pillRow">
+            <div class="pill"><b>NECRO Engine</b></div>
+            <div class="pill"><b>Ritual Fuel</b> DEAD</div>
+            <div class="pill"><b>Min Dead</b> 1,000,000</div>
+            <div class="pill"><b>Burn DEAD</b> 666 fuel</div>
+          </div>
+
+          <h2 class="headline">Revive the Dead Narrative.</h2>
+
+          <p class="sub">
+            Bury dead tokens into the Grave Wallet to memorialize on-chain funerals.
+            DEAD is <b>ritual fuel</b> — once sent it is permanently removed.
+            This is not a reward protocol. Only the grave remembers.
+          </p>
+
+          <div class="btnRow">
+            <a class="btn primary" href="https://t.me/DeadProtocolAI" target="_blank">
+              📣 Join Telegram
+            </a>
+            <a class="btn" href="https://x.com/DeadProtocolAI" target="_blank">
+              𝕏 Follow
+            </a>
+          </div>
+
+          <div class="walletBox">
+            <div class="walletLabel">GRAVE WALLET (Official)</div>
+            <div class="addr" id="graveAddr">HxxKyM1f2ydiSQad1Comxz9KQDzYzKJn4Az8tWYtU2P4</div>
+          </div>
+
+          <div class="walletBox" style="margin-top:12px;">
+            <div class="walletLabel">BURN WALLET (DEAD Fuel)</div>
+            <div class="addr" id="burnAddr">8mfYfkPHocwTYBTorZVGfWqLNdwvQ3gykP2aQJ4tEzQu</div>
+          </div>
         </div>
 
-        <div class="headline">Revive the Dead<br/>Narrative.</div>
-        <p class="sub">
-          Bury dead tokens into the <b>Grave Wallet</b>. If your funeral meets the rules,
-          the NECRO engine <b>may</b> reward you. No promises. No guarantees.
-          Just on-chain funerals recorded forever.
-        </p>
-
-        <div class="ctaRow">
-          <a class="btn telegram" href="https://t.me/DeadProtocolAI" target="_blank" rel="noopener">
-            <span>📣 Join Telegram</span>
-          </a>
-
-          <a class="btn x" href="https://x.com/DeadProtocolAI" target="_blank" rel="noopener">
-            <span>𝕏 Follow on X</span>
-          </a>
-
-          <button class="btn copy" id="copyBtn" type="button">
-            <span>📋 Copy Grave Wallet</span>
-          </button>
-        </div>
-
-        <div class="walletBox" id="walletBox">
-          <small>Grave Wallet (Official)</small>
-          <div class="addr" id="walletAddr">HxxKyM1f2ydiSQad1Comxz9KQDzYzKJn4Az8tWYtU2P4</div>
-          <div class="toast" id="toast">✅ Copied to clipboard.</div>
-        </div>
+        <aside class="mediaCard">
+          <img src="hero-funeral.jpg" alt="DEAD Protocol art"/>
+          <div class="imgCap">
+            <b>The First Funeral.</b> Burn the hype. Bury the dead.
+          </div>
+        </aside>
       </div>
-
-      <!-- RIGHT -->
-      <aside class="card heroRight">
-        <!-- IMAGE 1 -->
-        <img class="heroImg" src="hero-funeral.jpg" alt="DEAD Protocol — The First Funeral key art" />
-        <div class="imgCap">
-          <b>The First Funeral.</b> Burn the hype. Bury the dead. Record the ritual on-chain.
-        </div>
-      </aside>
     </section>
 
     <section class="grid">
-      <div class="card section">
-        <h2>Cosmic Aura</h2>
-        <p>Animated nebula layers + aura ring. Subtle, premium, and mobile-friendly.</p>
-      </div>
-
-      <div class="card section">
-        <h2>Breathing Headline</h2>
-        <p>The headline “breathes” slowly to feel alive… in the deadest way possible.</p>
-      </div>
-
-      <div class="card section">
-        <h2>Alive Buttons</h2>
-        <p>Telegram / X buttons glow like on-chain life — wallet copy is instant.</p>
-      </div>
-
-      <div class="card section">
-        <h2>How it Works</h2>
-        <p>
-          1) Send dead tokens to the Grave Wallet. 2) Validate transfer. 3) Receive NECRO reward (if valid).
-          4) Funeral is recorded permanently.
-        </p>
-      </div>
+      <div class="card"><h2>Cosmic Aura</h2><p>Animated nebula layers + aura ring. Subtle, premium, and mobile-friendly.</p></div>
+      <div class="card"><h2>Breathing Headline</h2><p>Headline “breathes” slowly — alive in the deadest way possible.</p></div>
+      <div class="card"><h2>Alive Buttons</h2><p>Telegram & 𝕏 buttons glow with on-chain life.</p></div>
+      <div class="card" style="grid-column:1/-1;"><h2>How it Works</h2><p>
+          1) Send dead tokens to the Grave Wallet.<br>
+          2) Valid transfer is checked on-chain.<br>
+          3) Dead tokens are memorialized forever.<br>
+          4) 666 DEAD ritual fuel must be burned in the Burn Wallet. 
+        </p></div>
     </section>
 
-    <!-- IMAGE 2 -->
-    <section class="card howWrap">
-      <img class="howImg" src="how-it-works.jpg" alt="How DEAD Protocol works infographic" />
-      <div class="howBar">
-        <div><b>HOW DEAD PROTOCOL WORKS</b> — simple, visual, and on-chain themed.</div>
-        <div class="mini">
-          <span class="tag">Min 1,000,000 Dead Tokens</span>
-          <span class="tag">Example Reward: 666 DEAD</span>
-          <span class="tag">No promises</span>
-        </div>
+    <section class="howWrap">
+      <img src="how-it-works.jpg" alt="How DEAD Protocol works graphic"/>
+      <div class="tagRow">
+        <div class="tag">Min 1,000,000 dead tokens</div>
+        <div class="tag">Burn 666 DEAD ritual fuel</div>
+        <div class="tag">Funerals memorialized on-chain</div>
+        <div class="tag">DEAD is fuel — not reward</div>
       </div>
     </section>
 
     <footer>
-      © 2025 DEAD Protocol. Built on GitHub Pages.<br/>
+      © 2025 DEAD Protocol. Built on GitHub Pages.  
       No financial advice. No guarantees. Only the grave.
     </footer>
-  </main>
-
-  <script>
-    // Copy wallet
-    const wallet = "HxxKyM1f2ydiSQad1Comxz9KQDzYzKJn4Az8tWYtU2P4";
-    const copyBtn = document.getElementById("copyBtn");
-    const toast = document.getElementById("toast");
-
-    copyBtn.addEventListener("click", async () => {
-      try{
-        await navigator.clipboard.writeText(wallet);
-        toast.textContent = "✅ Copied to clipboard.";
-        toast.classList.add("show");
-        setTimeout(()=> toast.classList.remove("show"), 1600);
-      }catch(e){
-        // fallback
-        const ta = document.createElement("textarea");
-        ta.value = wallet;
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand("copy");
-        document.body.removeChild(ta);
-        toast.textContent = "✅ Copied (fallback).";
-        toast.classList.add("show");
-        setTimeout(()=> toast.classList.remove("show"), 1600);
-      }
-    });
-
-    // Floating skulls (lightweight, mobile-safe)
-    const skullWrap = document.getElementById("skulls");
-    const skullCount = 14; // keep subtle
-    function skullSVG(){
-      return `
-        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M32 6c-12 0-22 9.6-22 22 0 8.2 4.2 14 9.3 17.6V54c0 2.2 1.8 4 4 4h3c1.1 0 2-.9 2-2v-4h8v4c0 1.1.9 2 2 2h3c2.2 0 4-1.8 4-4V45.6C49.8 42 54 36.2 54 28 54 15.6 44 6 32 6Z"
-                fill="rgba(255,255,255,.9)"/>
-          <path d="M23 28c0 3 2.2 5 5 5s5-2 5-5-2.2-5-5-5-5 2-5 5Z"
-                fill="rgba(0,0,0,.65)"/>
-          <path d="M36 28c0 3 2.2 5 5 5s5-2 5-5-2.2-5-5-5-5 2-5 5Z"
-                fill="rgba(0,0,0,.65)"/>
-          <path d="M29 39c0 1.8 1.3 3 3 3s3-1.2 3-3-1.3-3-3-3-3 1.2-3 3Z"
-                fill="rgba(0,0,0,.55)"/>
-          <path d="M22 50h20" stroke="rgba(0,0,0,.45)" stroke-width="4" stroke-linecap="round"/>
-        </svg>`;
-    }
-
-    for(let i=0;i<skullCount;i++){
-      const s = document.createElement("div");
-      s.className = "skull";
-      const left = Math.random()*100;
-      const delay = Math.random()*-18;
-      const dur = 14 + Math.random()*18;
-      const size = 18 + Math.random()*20;
-      const op = 0.12 + Math.random()*0.22;
-
-      s.style.left = left + "vw";
-      s.style.animationDuration = dur + "s";
-      s.style.animationDelay = delay + "s";
-      s.style.width = size + "px";
-      s.style.height = size + "px";
-      s.style.opacity = op.toFixed(2);
-
-      // slight hue variety with CSS filter
-      const hue = (Math.random()*40) - 10;
-      s.style.filter = `drop-shadow(0 0 12px rgba(179,107,255,.18)) hue-rotate(${hue}deg)`;
-
-      s.innerHTML = skullSVG();
-      skullWrap.appendChild(s);
-    }
-  </script>
+  </div>
 </body>
 </html>
