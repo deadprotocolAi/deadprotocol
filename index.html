@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#05060a" />
   <title>DEAD Protocol — The First On-Chain Funeral</title>
+
   <style>
     :root{
       --bg:#05060a;
@@ -59,8 +60,7 @@
       position:fixed;
       inset:0;
       pointer-events:none;
-      background-image:
-        radial-gradient(rgba(255,255,255,.08) 1px, transparent 1px);
+      background-image: radial-gradient(rgba(255,255,255,.08) 1px, transparent 1px);
       background-size: 110px 110px;
       background-position: 0 0;
       opacity:.10;
@@ -74,28 +74,11 @@
       to   { transform:scale(1.06) translate3d(1.5%, -1.5%, 0); filter:hue-rotate(30deg) saturate(1.2); }
     }
 
-    .wrap{
-      max-width:var(--max);
-      margin:0 auto;
-      padding:22px 16px 70px;
-      position:relative;
-    }
-
-    /* header */
-    .topbar{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      margin-top:8px;
-      margin-bottom:18px;
-      position:relative;
-      z-index:1;
-    }
+    .wrap{max-width:var(--max); margin:0 auto; padding:22px 16px 70px; position:relative;}
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:8px;margin-bottom:18px;position:relative;z-index:1;}
     .brand{
-      display:flex; align-items:center; gap:12px;
-      padding:12px 14px;
-      border-radius:18px;
+      display:flex;align-items:center;gap:12px;
+      padding:12px 14px;border-radius:18px;
       background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
       border:1px solid var(--stroke);
       box-shadow: var(--shadow);
@@ -110,16 +93,14 @@
     .brand b{display:block;font-size:16px;color:var(--text);}
 
     .status{
-      display:flex;
-      align-items:center;
-      gap:10px;
+      display:flex; align-items:center; gap:10px;
       padding:12px 14px;
       border-radius:999px;
       background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
       border:1px solid var(--stroke);
       box-shadow: var(--shadow);
       backdrop-filter: blur(10px);
-      min-width: 160px;
+      min-width: 170px;
       justify-content:center;
     }
     .dot{
@@ -130,7 +111,6 @@
     .status span{ color:var(--muted); font-size:13px; }
     .status strong{ color:var(--green); margin-left:6px; }
 
-    /* hero */
     .hero{
       padding:18px;
       border-radius:var(--radius);
@@ -138,8 +118,7 @@
       background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
       box-shadow: var(--shadow);
       backdrop-filter: blur(10px);
-      position:relative;
-      z-index:1;
+      position:relative; z-index:1;
     }
     .heroGrid{
       display:grid;
@@ -147,13 +126,9 @@
       gap:16px;
       align-items:stretch;
     }
-    @media (max-width: 860px){
-      .heroGrid{ grid-template-columns: 1fr; }
-    }  
+    @media (max-width: 860px){ .heroGrid{ grid-template-columns: 1fr; } }
 
-    .pillRow{
-      display:flex; flex-wrap:wrap; gap:10px; margin-bottom:14px;
-    }
+    .pillRow{display:flex; flex-wrap:wrap; gap:10px; margin-bottom:14px;}
     .pill{
       padding:10px 12px; border-radius:999px;
       border:1px solid rgba(255,255,255,.10);
@@ -163,18 +138,18 @@
     }
     .pill b{color:var(--text)}
 
-    .headline{margin:0;font-size:52px;line-height:1.04;letter-spacing:-.02em;
+    .headline{
+      margin:0;
+      font-size:52px;
+      line-height:1.04;
+      letter-spacing:-.02em;
       text-shadow: 0 18px 50px rgba(0,0,0,.55);
       animation:breathe 4.8s ease-in-out infinite;
     }
-    @keyframes breathe{
-      0%{transform:translateY(0);}50%{transform:translateY(-2px);}100%{transform:translateY(0);}
-    }
-
+    @keyframes breathe{ 0%{transform:translateY(0);}50%{transform:translateY(-2px);}100%{transform:translateY(0);} }
     .sub{margin:14px 0 18px;color:var(--muted);font-size:15.5px;line-height:1.7;}
 
     .btnRow{display:flex;flex-wrap:wrap;gap:12px;align-items:center;}
-
     .btn{
       border:1px solid rgba(255,255,255,.12);
       background: rgba(0,0,0,.20);
@@ -192,38 +167,137 @@
     }
     .btn:hover{transform:translateY(-1px);}
     .btn:active{transform:translateY(0);}
-
     .btn.primary{background: linear-gradient(135deg, rgba(43,255,184,.22), rgba(181,108,255,.20));}
+    .btn.small{padding:10px 12px;border-radius:14px;font-size:14px}
+    .btn.ghost{background:rgba(255,255,255,.04)}
+    .btn.warn{border-color:rgba(255,204,102,.25); box-shadow:0 0 0 1px rgba(255,204,102,.08) inset;}
 
     .walletBox{
       margin-top:16px;padding:14px;border-radius:18px;
       border:1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.14);backdrop-filter:blur(10px);
+      background: rgba(0,0,0,.14);
+      backdrop-filter:blur(10px);
     }
+    .walletHead{display:flex;align-items:center;justify-content:space-between;gap:10px}
     .walletLabel{font-size:13px;color:var(--muted2);margin-bottom:8px;}
-    .addr{font-family:ui-monospace,monospace;font-size:14px;color:var(--text);padding:12px;border-radius:14px;
-      background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);}
+    .addr{
+      font-family:ui-monospace,monospace;
+      font-size:14px;color:var(--text);
+      padding:12px;border-radius:14px;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.08);
+      word-break: break-all;
+    }
 
-    .mediaCard{border-radius:var(--radius2);overflow:hidden;border:1px solid rgba(255,255,255,.08);
-      background:rgba(0,0,0,.14);backdrop-filter:blur(10px);box-shadow:0 20px 70px rgba(0,0,0,.55);}
-    .mediaCard img{width:100%;height:310px;object-fit:cover;}
-
-    .imgCap{padding:14px;color:var(--muted);border-top:1px solid rgba(255,255,255,.07);
-      background:linear-gradient(180deg,rgba(0,0,0,.06),rgba(0,0,0,.18));font-size:14px;}
+    .mediaCard{
+      border-radius:var(--radius2);
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(0,0,0,.14);
+      backdrop-filter:blur(10px);
+      box-shadow:0 20px 70px rgba(0,0,0,.55);
+    }
+    .mediaCard img{width:100%;height:310px;object-fit:cover;background:#000;}
+    .imgCap{
+      padding:14px;color:var(--muted);
+      border-top:1px solid rgba(255,255,255,.07);
+      background:linear-gradient(180deg,rgba(0,0,0,.06),rgba(0,0,0,.18));
+      font-size:14px;
+    }
 
     .grid{margin-top:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
     @media (max-width:860px){.grid{grid-template-columns:1fr}}
 
-    .card{padding:16px;border-radius:var(--radius2);border:1px solid rgba(255,255,255,.10);
-      background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.03));}
+    .card{
+      padding:16px;border-radius:var(--radius2);
+      border:1px solid rgba(255,255,255,.10);
+      background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.03));
+    }
     .card h2{margin:0 0 8px;font-size:20px;color:var(--text);}
     .card p{margin:0;color:var(--muted);font-size:14.5px;line-height:1.65;}
 
-    .howWrap{margin-top:14px;padding:14px;border-radius:var(--radius);}
+    .section{
+      margin-top:14px;
+      padding:16px;
+      border-radius:var(--radius);
+      border:1px solid rgba(255,255,255,.10);
+      background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.03));
+      box-shadow: 0 10px 50px rgba(0,0,0,.35);
+      backdrop-filter: blur(10px);
+    }
+    .sectionHead{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px;}
+    .sectionTitle{margin:0;font-size:22px}
+    .sectionDesc{margin:0;color:var(--muted);font-size:14.5px;line-height:1.6}
+
     .howWrap img{width:100%;border-radius:18px;border:1px solid rgba(255,255,255,.08);background:#000;}
     .tagRow{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;}
-    .tag{padding:10px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.10);
-      background:rgba(0,0,0,.14);color:var(--muted);font-size:13px;}
+    .tag{
+      padding:10px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.10);
+      background:rgba(0,0,0,.14);color:var(--muted);font-size:13px;
+    }
+
+    .twoCol{display:grid;grid-template-columns: 1fr 1fr; gap:12px;}
+    @media (max-width:860px){.twoCol{grid-template-columns:1fr}}
+
+    .list{margin:0;padding-left:18px;color:var(--muted);line-height:1.7;font-size:14.5px;}
+    .mono{font-family:ui-monospace,monospace}
+
+    .note{
+      border:1px solid rgba(255,204,102,.20);
+      background:rgba(255,204,102,.06);
+      border-radius:16px;
+      padding:12px 14px;
+      color:var(--muted);
+      font-size:14.2px;
+      line-height:1.65;
+    }
+
+    /* Ritual Counter */
+    .counterGrid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:12px;
+      align-items:stretch;
+    }
+    @media (max-width:860px){ .counterGrid{grid-template-columns:1fr} }
+    .bigNum{
+      font-size:44px;
+      letter-spacing:-.02em;
+      margin:6px 0 2px;
+      text-shadow:0 18px 50px rgba(0,0,0,.55);
+    }
+    .progressWrap{
+      margin-top:10px;
+      height:12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(0,0,0,.20);
+      overflow:hidden;
+    }
+    .progressBar{
+      height:100%;
+      width:0%;
+      background: linear-gradient(90deg, rgba(43,255,184,.55), rgba(181,108,255,.55));
+      border-right:1px solid rgba(255,255,255,.12);
+      box-shadow:0 0 24px rgba(181,108,255,.25);
+      transition:width .35s ease;
+    }
+    .tiny{font-size:12.8px;color:var(--muted2);line-height:1.6}
+
+    .steps{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:10px;
+      margin-top:10px;
+    }
+    .step{
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(0,0,0,.12);
+      border-radius:16px;
+      padding:12px 14px;
+    }
+    .step b{color:var(--text)}
+    .step p{margin:6px 0 0;color:var(--muted);font-size:14.5px;line-height:1.65}
 
     footer{text-align:center;color:rgba(255,255,255,.45);font-size:13px;margin-top:18px;}
   </style>
@@ -237,47 +311,51 @@
         <div class="logo">🪦</div>
         <div><h1>DEAD Protocol</h1><b>The First On-Chain Funeral</b></div>
       </div>
-
       <div class="status">
         <div class="dot"></div>
         <span>Solana Graveyard <strong>OPEN</strong></span>
       </div>
     </div>
 
+    <!-- HERO -->
     <section class="hero">
       <div class="heroGrid">
         <div>
           <div class="pillRow">
             <div class="pill"><b>NECRO Engine</b></div>
             <div class="pill"><b>Ritual Fuel</b> DEAD</div>
-            <div class="pill"><b>Min Dead</b> 1,000,000</div>
-            <div class="pill"><b>Burn DEAD</b> 666 fuel</div>
+            <div class="pill"><b>Min Dead Tokens</b> 1,000,000</div>
+            <div class="pill"><b>Fuel Burn</b> 666 DEAD</div>
           </div>
 
           <h2 class="headline">Revive the Dead Narrative.</h2>
 
           <p class="sub">
             Bury dead tokens into the Grave Wallet to memorialize on-chain funerals.
-            DEAD is <b>ritual fuel</b> — once sent it is permanently removed.
-            This is not a reward protocol. Only the grave remembers.
+            <b>DEAD is ritual fuel</b> — once sent, it is permanently removed from circulation.
+            This is a narrative + memorial layer. <b>No promises. No guarantees.</b>
           </p>
 
           <div class="btnRow">
-            <a class="btn primary" href="https://t.me/DeadProtocolAI" target="_blank">
-              📣 Join Telegram
-            </a>
-            <a class="btn" href="https://x.com/DeadProtocolAI" target="_blank">
-              𝕏 Follow
-            </a>
+            <a class="btn primary" href="https://t.me/DeadProtocolAI" target="_blank">📣 Join Telegram</a>
+            <a class="btn" href="https://x.com/DeadProtocolAI" target="_blank">𝕏 Follow</a>
+            <a class="btn ghost small" href="#how-to-submit">How to Submit</a>
+            <a class="btn ghost small" href="#roadmap">Roadmap</a>
           </div>
 
           <div class="walletBox">
-            <div class="walletLabel">GRAVE WALLET (Official)</div>
+            <div class="walletHead">
+              <div class="walletLabel">GRAVE WALLET (Official)</div>
+              <button class="btn small" onclick="copyText('graveAddr')">📋 Copy</button>
+            </div>
             <div class="addr" id="graveAddr">HxxKyM1f2ydiSQad1Comxz9KQDzYzKJn4Az8tWYtU2P4</div>
           </div>
 
           <div class="walletBox" style="margin-top:12px;">
-            <div class="walletLabel">BURN WALLET (DEAD Fuel)</div>
+            <div class="walletHead">
+              <div class="walletLabel">BURN WALLET (DEAD Fuel)</div>
+              <button class="btn small warn" onclick="copyText('burnAddr')">🔥 Copy</button>
+            </div>
             <div class="addr" id="burnAddr">8mfYfkPHocwTYBTorZVGfWqLNdwvQ3gykP2aQJ4tEzQu</div>
           </div>
         </div>
@@ -285,38 +363,329 @@
         <aside class="mediaCard">
           <img src="hero-funeral.jpg" alt="DEAD Protocol art"/>
           <div class="imgCap">
-            <b>The First Funeral.</b> Burn the hype. Bury the dead.
+            <b>The First Funeral.</b> Burn the hype. Bury the dead. Record the ritual on-chain.
           </div>
         </aside>
       </div>
     </section>
 
+    <!-- FEATURE CARDS -->
     <section class="grid">
-      <div class="card"><h2>Cosmic Aura</h2><p>Animated nebula layers + aura ring. Subtle, premium, and mobile-friendly.</p></div>
-      <div class="card"><h2>Breathing Headline</h2><p>Headline “breathes” slowly — alive in the deadest way possible.</p></div>
-      <div class="card"><h2>Alive Buttons</h2><p>Telegram & 𝕏 buttons glow with on-chain life.</p></div>
-      <div class="card" style="grid-column:1/-1;"><h2>How it Works</h2><p>
-          1) Send dead tokens to the Grave Wallet.<br>
-          2) Valid transfer is checked on-chain.<br>
-          3) Dead tokens are memorialized forever.<br>
-          4) 666 DEAD ritual fuel must be burned in the Burn Wallet. 
-        </p></div>
+      <div class="card">
+        <h2>Cosmic Aura</h2>
+        <p>Animated nebula layers + aura ring. Subtle, premium, and mobile-friendly.</p>
+      </div>
+      <div class="card">
+        <h2>Breathing Headline</h2>
+        <p>The headline “breathes” slowly to feel alive… in the deadest way possible.</p>
+      </div>
+      <div class="card">
+        <h2>Alive Buttons</h2>
+        <p>Telegram & 𝕏 buttons glow like on-chain life — wallet copy is instant.</p>
+      </div>
+
+      <div class="card" style="grid-column:1/-1;">
+        <h2>How it Works</h2>
+        <p>
+          1) Send <b>dead tokens</b> to the <b>Grave Wallet</b> (minimum <b>1,000,000</b>).<br>
+          2) Burn <b>666 DEAD</b> into the <b>Burn Wallet</b> as ritual fuel.<br>
+          3) The funeral becomes a <b>public, permanent on-chain memorial</b> (anyone can verify tx).<br>
+          4) This is narrative utility — <b>no promises</b>, no guaranteed rewards.
+        </p>
+      </div>
     </section>
 
-    <section class="howWrap">
+    <!-- MECHANISM IMAGE -->
+    <section class="section howWrap" id="how">
+      <div class="sectionHead">
+        <div>
+          <h3 class="sectionTitle">Mechanism (Visual)</h3>
+          <p class="sectionDesc">Simple, visual, and on-chain themed. Universal theme.</p>
+        </div>
+      </div>
+
       <img src="how-it-works.jpg" alt="How DEAD Protocol works graphic"/>
+
       <div class="tagRow">
         <div class="tag">Min 1,000,000 dead tokens</div>
-        <div class="tag">Burn 666 DEAD ritual fuel</div>
-        <div class="tag">Funerals memorialized on-chain</div>
-        <div class="tag">DEAD is fuel — not reward</div>
+        <div class="tag">Burn 666 DEAD fuel</div>
+        <div class="tag">Public memorial record</div>
+        <div class="tag">No promises</div>
+      </div>
+
+      <div class="note" style="margin-top:12px;">
+        <b>Important:</b> DEAD fuel is burned to a public burn address. Tokens sent to Grave Wallet are not returned.
+        This is narrative + memorial, not financial advice.
+      </div>
+    </section>
+
+    <!-- RITUAL COUNTER -->
+    <section class="section" id="ritual-counter">
+      <div class="sectionHead">
+        <div>
+          <h3 class="sectionTitle">Ritual Counter</h3>
+          <p class="sectionDesc">Track funerals. Keep the graveyard alive. (Local counter for now.)</p>
+        </div>
+      </div>
+
+      <div class="counterGrid">
+        <div class="card">
+          <h2>Total Funerals (Local)</h2>
+          <div class="bigNum"><span id="funeralCount">0</span> ⚰️</div>
+          <div class="tiny">
+            Stored in your browser (localStorage). For a global counter we will add an on-chain indexer / backend later.
+          </div>
+
+          <div class="progressWrap" aria-label="progress to target">
+            <div class="progressBar" id="progressBar"></div>
+          </div>
+          <div class="tiny" style="margin-top:8px;">
+            Target: <b id="targetLabel">100</b> funerals — <span id="progressLabel">0%</span>
+          </div>
+
+          <div class="btnRow" style="margin-top:12px;">
+            <button class="btn primary" onclick="addFuneral(1)">+1 Funeral</button>
+            <button class="btn" onclick="addFuneral(10)">+10</button>
+            <button class="btn ghost" onclick="setTarget()">Set Target</button>
+            <button class="btn warn" onclick="resetCounter()">Reset</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>What counts as a “funeral”?</h2>
+          <p>
+            A valid ritual is:
+            <b>(1)</b> dead tokens sent to Grave Wallet (≥ 1,000,000)
+            and <b>(2)</b> 666 DEAD burned to Burn Wallet.
+            <br><br>
+            Anyone can verify with tx links.
+          </p>
+          <div class="btnRow" style="margin-top:12px;">
+            <a class="btn small" href="#how-to-submit">Open How to Submit</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW TO SUBMIT -->
+    <section class="section" id="how-to-submit">
+      <div class="sectionHead">
+        <div>
+          <h3 class="sectionTitle">How to Submit a Funeral</h3>
+          <p class="sectionDesc">Step-by-step for Phantom / Solana. Fast, clear, verifiable.</p>
+        </div>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <b>Step 1 — Prepare</b>
+          <p>
+            You need: <b>dead token</b> (the token you want to bury) + enough <b>DEAD</b> for fuel (<b>666 DEAD</b>) + a little SOL for gas.
+          </p>
+        </div>
+
+        <div class="step">
+          <b>Step 2 — Send dead tokens to the Grave Wallet</b>
+          <p>
+            Open <b>Phantom</b> → choose the dead token → <b>Send</b> →
+            paste Grave Wallet: <span class="mono">HxxKyM1f2ydiSQad1Comxz9KQDzYzKJn4Az8tWYtU2P4</span> →
+            amount: <b>minimum 1,000,000</b> →
+            confirm.
+          </p>
+        </div>
+
+        <div class="step">
+          <b>Step 3 — Burn 666 DEAD as ritual fuel</b>
+          <p>
+            In Phantom → choose <b>DEAD</b> token → <b>Send</b> →
+            paste Burn Wallet: <span class="mono">8mfYfkPHocwTYBTorZVGfWqLNdwvQ3gykP2aQJ4tEzQu</span> →
+            amount: <b>666</b> →
+            confirm.
+          </p>
+        </div>
+
+        <div class="step">
+          <b>Step 4 — Save proof (tx links)</b>
+          <p>
+            After each send, tap the transaction → copy the tx hash / view in explorer (Solscan).
+            You’ll have <b>2 tx proofs</b>: burial tx + fuel burn tx.
+          </p>
+        </div>
+
+        <div class="step">
+          <b>Step 5 — Share in Telegram / X</b>
+          <p>
+            Post: token name + tx links + a short “funeral line” (RIP, Only the Grave Remembers).
+            Community verifies the ritual publicly.
+          </p>
+        </div>
+      </div>
+
+      <div class="note" style="margin-top:12px;">
+        <b>Reminder:</b> Tokens sent to Grave / Burn wallets are not returned.
+        Do not send anything you can’t afford to lose. No financial advice.
+      </div>
+
+      <div class="btnRow" style="margin-top:12px;">
+        <a class="btn primary" href="https://t.me/DeadProtocolAI" target="_blank">📣 Submit in Telegram</a>
+        <a class="btn" href="https://x.com/DeadProtocolAI" target="_blank">𝕏 Share on X</a>
+      </div>
+    </section>
+
+    <!-- ROADMAP -->
+    <section class="section" id="roadmap">
+      <div class="sectionHead">
+        <div>
+          <h3 class="sectionTitle">Roadmap</h3>
+          <p class="sectionDesc">Build the graveyard. Make funerals verifiable. Scale the ritual.</p>
+        </div>
+      </div>
+
+      <div class="twoCol">
+        <div class="card">
+          <h2>Phase I — Launch the Grave</h2>
+          <ul class="list">
+            <li>Website + socials live</li>
+            <li>Grave Wallet + Burn Wallet published</li>
+            <li>First community funerals</li>
+            <li>Brand rules: universal, no religious symbols</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h2>Phase II — Proof & Index</h2>
+          <ul class="list">
+            <li>Public “Funeral Registry” page (tx list)</li>
+            <li>Global ritual counter (indexer/API)</li>
+            <li>Auto-verify: burial tx + burn tx pairing</li>
+            <li>Weekly “Graveyard Report” on X</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h2>Phase III — Necro Expansion</h2>
+          <ul class="list">
+            <li>Partnership with dead communities (memecoins)</li>
+            <li>On-chain badges / commemorations (optional)</li>
+            <li>Open “Ritual SDK” for integrations</li>
+            <li>Graveyard becomes a culture layer</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h2>Principles</h2>
+          <ul class="list">
+            <li>No promises, no guarantees</li>
+            <li>Everything verifiable on-chain</li>
+            <li>Ritual is the product</li>
+            <li>Only the Grave Remembers</li>
+          </ul>
+        </div>
       </div>
     </section>
 
     <footer>
-      © 2025 DEAD Protocol. Built on GitHub Pages.  
+      © 2025 DEAD Protocol. Built on GitHub Pages.<br/>
       No financial advice. No guarantees. Only the grave.
     </footer>
+
   </div>
+
+  <script>
+    // ----- Copy -----
+    function copyText(id){
+      const el = document.getElementById(id);
+      const text = el ? el.textContent.trim() : "";
+      if(!text) return;
+      navigator.clipboard.writeText(text).then(()=> toast("Copied to clipboard."))
+      .catch(()=>{
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+        toast("Copied.");
+      });
+    }
+
+    let toastTimer;
+    function toast(msg){
+      clearTimeout(toastTimer);
+      let t = document.getElementById("toast");
+      if(!t){
+        t = document.createElement("div");
+        t.id="toast";
+        t.style.position="fixed";
+        t.style.left="50%";
+        t.style.bottom="18px";
+        t.style.transform="translateX(-50%)";
+        t.style.padding="10px 12px";
+        t.style.borderRadius="14px";
+        t.style.background="rgba(0,0,0,.55)";
+        t.style.border="1px solid rgba(255,255,255,.14)";
+        t.style.color="rgba(255,255,255,.85)";
+        t.style.backdropFilter="blur(10px)";
+        t.style.fontFamily="ui-sans-serif,system-ui";
+        t.style.fontSize="13.5px";
+        t.style.zIndex="9999";
+        document.body.appendChild(t);
+      }
+      t.textContent = msg;
+      t.style.opacity="1";
+      toastTimer = setTimeout(()=>{ t.style.opacity="0"; }, 1300);
+    }
+
+    // ----- Ritual Counter (LOCAL) -----
+    const LS_KEY = "dead_funeral_count_v1";
+    const LS_TARGET = "dead_funeral_target_v1";
+    let count = Number(localStorage.getItem(LS_KEY) || 0);
+    let target = Number(localStorage.getItem(LS_TARGET) || 100);
+
+    function renderCounter(){
+      const countEl = document.getElementById("funeralCount");
+      const bar = document.getElementById("progressBar");
+      const tLabel = document.getElementById("targetLabel");
+      const pLabel = document.getElementById("progressLabel");
+
+      if(countEl) countEl.textContent = count.toLocaleString();
+      if(tLabel) tLabel.textContent = target.toLocaleString();
+
+      const pct = target > 0 ? Math.min(100, Math.round((count/target)*100)) : 0;
+      if(bar) bar.style.width = pct + "%";
+      if(pLabel) pLabel.textContent = pct + "%";
+    }
+
+    function addFuneral(n){
+      count = Math.max(0, count + n);
+      localStorage.setItem(LS_KEY, String(count));
+      renderCounter();
+      toast(`Ritual recorded (local): +${n}`);
+    }
+
+    function resetCounter(){
+      if(!confirm("Reset local counter?")) return;
+      count = 0;
+      localStorage.setItem(LS_KEY, "0");
+      renderCounter();
+      toast("Counter reset.");
+    }
+
+    function setTarget(){
+      const v = prompt("Set new target funerals (number):", String(target));
+      if(v === null) return;
+      const n = Number(String(v).replace(/[^\d]/g,""));
+      if(!Number.isFinite(n) || n <= 0){
+        toast("Invalid target.");
+        return;
+      }
+      target = n;
+      localStorage.setItem(LS_TARGET, String(target));
+      renderCounter();
+      toast("Target updated.");
+    }
+
+    renderCounter();
+  </script>
 </body>
 </html>
